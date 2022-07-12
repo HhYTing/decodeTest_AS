@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="fill_parent" 
+    android:layout_width="fill_parent" 
+    android:baselineAligned="true" 
+    android:orientation="vertical"    
+    android:weightSum="1">
+    
+    <!--android:visibility="gone"-->
+  
+   <LinearLayout 
+       android:id="@+id/activity_main_Layout0" 
+       android:layout_width="fill_parent"  
+       android:layout_height="wrap_content"
+       android:weightSum="1" >
+        <Button 
+            android:layout_height="wrap_content" 
+            android:id="@+id/button_license_activate" 
+            android:text="@string/activate_test" 
+            android:layout_width="fill_parent"  
+            android:textAppearance="?android:attr/textAppearanceSmall">
+        </Button>
+      
+   </LinearLayout> 
+   
+   <LinearLayout 
+       
+       android:id="@+id/activity_main_Layout1" 
+       android:layout_width="fill_parent"  
+       android:layout_height="wrap_content"
+       android:weightSum="1" >
+        <Button 
+            android:layout_height="wrap_content" 
+            android:id="@+id/button_decode_test" 
+            android:text="@string/decode_test" 
+            android:layout_width="fill_parent"  
+            android:textAppearance="?android:attr/textAppearanceSmall">
+        </Button>
+   </LinearLayout> 
+   
+   <LinearLayout 
+       
+       android:id="@+id/activity_main_Layout2" 
+       android:layout_width="fill_parent"  
+       android:layout_height="wrap_content"
+       android:weightSum="1" >
+        <Button 
+            android:layout_height="wrap_content" 
+            android:id="@+id/button_get_lib_ver" 
+            android:text="@string/get_lib_ver" 
+            android:layout_width="fill_parent"  
+            android:textAppearance="?android:attr/textAppearanceSmall">
+        </Button>
+   </LinearLayout> 
+   
+   <LinearLayout 
+       
+       android:id="@+id/activity_main_Layout3" 
+       android:layout_width="fill_parent"  
+       android:layout_height="wrap_content"
+       android:weightSum="1" >
+        <Button 
+            android:layout_height="wrap_content" 
+            android:id="@+id/button_check_license" 
+            android:text="@string/check_license" 
+            android:layout_width="fill_parent"  
+            android:textAppearance="?android:attr/textAppearanceSmall">
+        </Button>
+   </LinearLayout> 
+   
+   <LinearLayout 
+       
+       android:id="@+id/activity_main_Layout4" 
+       android:layout_width="fill_parent"  
+       android:layout_height="wrap_content"
+       android:weightSum="1" >
+        <Button 
+            android:layout_height="wrap_content" 
+            android:id="@+id/button_get_feature" 
+            android:text="@string/activate_feature" 
+            android:layout_width="fill_parent"  
+            android:textAppearance="?android:attr/textAppearanceSmall">
+        </Button>
+   </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="分辨率:"/>
+    <RadioGroup
+        android:id="@+id/mode_rg_size"
+        android:layout_toRightOf="@+id/bt_scan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_46"
+        android:paddingLeft="@dimen/dp_13"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/preview_vga"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text="@string/text_preview_vga"
+            android:textSize="@dimen/dp_17"
+            android:checked="true"/>
+
+        <RadioButton
+            android:id="@+id/preview_hd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text="@string/text_preview_hd"
+            android:textSize="@dimen/dp_17" />
+
+    </RadioGroup>
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="补光灯:"/>
+    <RadioGroup
+        android:id="@+id/flashSwitch"
+        android:layout_toRightOf="@+id/bt_scan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_46"
+        android:paddingLeft="@dimen/dp_13"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/flash_on"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text="开"
+            android:textSize="@dimen/dp_17"
+            android:checked="true"/>
+
+        <RadioButton
+            android:id="@+id/flash_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_133"
+            android:text="关"
+            android:textSize="@dimen/dp_17" />
+
+    </RadioGroup>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="扫描模式:"/>
+    <RadioGroup
+        android:id="@+id/oneshotSwitch"
+        android:layout_toRightOf="@+id/bt_scan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_46"
+        android:paddingLeft="@dimen/dp_13"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/oneshot_on"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text="单次"
+            android:textSize="@dimen/dp_17"
+            android:checked="true"/>
+
+        <RadioButton
+            android:id="@+id/oneshot_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_116"
+            android:text="连续"
+            android:textSize="@dimen/dp_17" />
+
+    </RadioGroup>
+   
+   <EditText android:inputType="textMultiLine" 
+        android:layout_width="fill_parent" 
+        android:id="@+id/activity_main_editRecvData" 
+        android:layout_height="fill_parent" 
+        android:gravity="top" 
+        android:enabled="true" 
+        android:focusable="false"
+        android:textAppearance="?android:attr/textAppearanceSmall">
+        
+    </EditText>
+ 
+</LinearLayout>

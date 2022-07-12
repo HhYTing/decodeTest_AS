@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="fill_parent" 
+    android:layout_width="fill_parent" 
+    android:baselineAligned="true" 
+    android:orientation="vertical"    
+    android:weightSum="1">
+    
+    <!--android:visibility="gone"-->
+  
+   <LinearLayout 
+       android:id="@+id/activity_main_Layout0" 
+       android:layout_width="fill_parent"  
+       android:layout_height="wrap_content"
+       android:weightSum="1" >
+        <Button 
+            android:layout_height="wrap_content" 
+            android:id="@+id/button_activate_feature" 
+            android:text="@string/activate_feature" 
+            android:layout_width="fill_parent"  
+            android:textAppearance="?android:attr/textAppearanceSmall">
+        </Button>
+      
+   </LinearLayout> 
+   
+   <LinearLayout 
+       android:id="@+id/activity_main_Layout1" 
+       android:layout_width="fill_parent"  
+       android:layout_height="wrap_content"
+       android:weightSum="1" >
+
+		<TextView
+            android:id="@+id/textView_pincode_feature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/file_path_feature" 
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+        <EditText
+            android:id="@+id/editText_pincode_feature"
+            android:layout_width="0dp" 
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:ems="5"
+            android:inputType="text"
+            android:text="feature.txt" 
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
+   </LinearLayout> 
+   
+   <LinearLayout
+           android:id="@+id/linearLayout2"
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:weightSum="1" >
+
+           <RadioGroup
+				android:id="@+id/processGroup_feature"
+			    android:layout_width="wrap_content" 
+			    android:layout_height="wrap_content" 
+			    android:orientation="horizontal">
+			    <RadioButton
+			    	android:id="@+id/sdPath_feature"
+			 	    android:layout_width="wrap_content" 
+			  	    android:layout_height="wrap_content" 
+			  	    android:text="SD卡根目录"
+			  	    android:textAppearance="?android:attr/textAppearanceSmall"
+			  	    android:checked="true"
+			  	    />
+			    <RadioButton
+			    	android:id="@+id/absolutePath_feature"
+			 	    android:layout_width="wrap_content" 
+			  	    android:layout_height="wrap_content" 
+			  	    android:textAppearance="?android:attr/textAppearanceSmall"
+			  	    android:text="绝对路径"
+			  	    />
+			</RadioGroup>
+    </LinearLayout>
+   
+   
+   <EditText android:inputType="textMultiLine" 
+        android:layout_width="fill_parent" 
+        android:id="@+id/activity_main_editRecvData" 
+        android:layout_height="fill_parent" 
+        android:gravity="top" 
+        android:enabled="true" 
+        android:focusable="false"
+        android:textAppearance="?android:attr/textAppearanceSmall">
+        
+    </EditText>
+ 
+</LinearLayout>

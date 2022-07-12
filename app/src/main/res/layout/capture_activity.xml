@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="fill_parent" 
+    android:layout_width="fill_parent" 
+    android:baselineAligned="true" 
+    android:orientation="vertical"    
+    android:weightSum="1">
+  
+   <LinearLayout 
+       android:id="@+id/testActivity_Layout1" 
+       android:layout_width="fill_parent"  
+       android:layout_height="wrap_content"
+       android:layout_marginTop="30dp"
+       android:weightSum="1" >
+       <Button 
+            android:id="@+id/button_scantest_back" 
+            android:text="@string/scantest_back" 
+            android:layout_width="0dp" 
+            android:layout_height="90dp"
+            android:layout_weight="1"
+            android:textAppearance="?android:attr/textAppearanceLarge">
+        </Button>
+   </LinearLayout> 
+   
+
+   <EditText android:inputType="textMultiLine" 
+        android:layout_marginTop="20dp"
+        android:layout_width="fill_parent" 
+        android:id="@+id/editRecvData" 
+        android:layout_height="fill_parent" 
+        android:gravity="top" 
+        android:enabled="true" 
+        android:focusable="false"
+        android:textAppearance="?android:attr/textAppearanceLarge">       
+    </EditText>
+   
+</LinearLayout>
