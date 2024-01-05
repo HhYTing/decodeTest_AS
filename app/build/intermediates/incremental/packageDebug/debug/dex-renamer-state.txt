@@ -1,4 +1,0 @@
-#Mon Dec 25 17:48:54 CST 2023
-base.0=E\:\\Project\\decodeTest_AS\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
-path.0=classes.dex
-renamed.0=classes.dex
