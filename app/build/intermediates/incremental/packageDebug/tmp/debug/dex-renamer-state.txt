@@ -1,0 +1,4 @@
+#Fri Jan 05 12:20:07 CST 2024
+base.0=C\:\\Users\\heyt210526\\Desktop\\decodeTest_AS\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

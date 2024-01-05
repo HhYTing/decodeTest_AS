@@ -1,4 +1,4 @@
-#Mon Jul 04 11:36:35 CST 2022
-base.0=E\:\\project\\SDK\\TPS508_0701\\Scan\\decodeTest_SceneChangeDetection\\decodeTest_SceneChangeDetection\\decodeTest_AS\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+#Mon Dec 25 17:48:54 CST 2023
+base.0=E\:\\Project\\decodeTest_AS\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
 path.0=classes.dex
 renamed.0=classes.dex

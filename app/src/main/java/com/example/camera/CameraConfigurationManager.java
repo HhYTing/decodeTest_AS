@@ -15,6 +15,7 @@ import android.view.Surface;
 import android.view.WindowManager;
 
 import com.example.activity.CaptureActivity;
+import com.example.decodeTest.testSetting;
 import com.example.util.LogUtils;
 import com.example.util.Util;
 
@@ -74,13 +75,13 @@ final class CameraConfigurationManager {
 		bLight = light;
 
 
-		
-		
+
+
 //		defaultSize = "1280x720";
 //		defaultSize = "1024x768";
 //		defaultSize = "640x480";//分辨率
-		
-		
+//		defaultSize = "1280x1080";
+
 		Log.i(TAG, Util.getMethodLine()+"finally previewSize="+defaultSize);
 		String size[] = defaultSize.split("x");
 		cameraResolution = new Point(Integer.parseInt(size[0]),Integer.parseInt(size[1]));
@@ -94,6 +95,13 @@ final class CameraConfigurationManager {
 			parameters.setFlashMode(Parameters.FLASH_MODE_TORCH);
 			camera.setParameters(parameters);
 		}
+
+//		mCaptureRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+//		mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, 0);//关闭自动曝光
+//		mCaptureRequestBuilder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, (long) 1000);
+//		mCaptureRequestBuilder.set(CaptureRequest.SENSOR_FRAME_DURATION, minFrameDuration);
+//		mCaptureRequestBuilder.set(CaptureRequest.CONTROL_MODE, 0);//所有3A控件被禁用
+
 //		parameters.getMinExposureCompensation()
 //		().getMaxExposureCompensation
 //		int exposure = parameters.getMinExposureCompensation();
@@ -112,20 +120,21 @@ final class CameraConfigurationManager {
 	@SuppressLint("NewApi")
 	private void setCameraDisplayOrientation(Activity activity, Camera camera) {
 		@SuppressWarnings("static-access")
-		int numberOfCameras = camera.getNumberOfCameras();
-		int cameraId;
+//		int numberOfCameras = camera.getNumberOfCameras();
+//		int cameraId;
 		CameraInfo cameraInfo = new CameraInfo();
-		;
-		for (int i = 0; i < numberOfCameras; i++) {
-			Camera.getCameraInfo(i, cameraInfo);
-			if (cameraInfo.facing == CameraInfo.CAMERA_FACING_BACK) {
-				cameraId = CameraInfo.CAMERA_FACING_BACK;
-				break;
-			} else {
-				cameraId = CameraInfo.CAMERA_FACING_FRONT;
-				break;
-			}
-		}
+//
+//		for (int i = 0; i < numberOfCameras; i++) {
+//			Camera.getCameraInfo(i, cameraInfo);
+//			if (cameraInfo.facing == CameraInfo.CAMERA_FACING_BACK) {
+//				cameraId = CameraInfo.CAMERA_FACING_BACK;
+//				break;
+//			} else {
+//				cameraId = CameraInfo.CAMERA_FACING_FRONT;
+//				break;
+//			}
+//		}
+		Camera.getCameraInfo(testSetting.getCameraID(), cameraInfo);
 		int rotation = activity.getWindowManager().getDefaultDisplay()
 				.getRotation();
 		int degrees = 0;
@@ -144,7 +153,7 @@ final class CameraConfigurationManager {
 			break;
 		}
 
-		if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+		if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
 			displayOrientation = (cameraInfo.orientation + degrees) % 360;
 			displayOrientation = (360 - displayOrientation) % 360; // compensate
 																	// the
@@ -281,7 +290,7 @@ final class CameraConfigurationManager {
 	}
 
 	private void setFocusMode(Camera.Parameters parameters,Camera camera) {
-		String focusMode = Camera.Parameters.FOCUS_MODE_AUTO;	
+		String focusMode = Camera.Parameters.FOCUS_MODE_FIXED;
 		Log.i(TAG, Util.getMethodLine()+"focusMode="+focusMode);
 		parameters.setFocusMode(focusMode);
 		

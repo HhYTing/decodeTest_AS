@@ -2,11 +2,14 @@ package com.example.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -16,9 +19,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.decodeTest.R;
+import com.example.util.LogUtils;
 import com.hd.decoder.CodeType;
 import com.hd.decoder.Decoder_jni;
- 
+
+import java.util.List;
+
 public class MainActivity extends Activity{
 	private static final String DEBUG_TAG = "MainActivity";
 	private static final String VER = "1.2.20181026";
@@ -40,10 +46,63 @@ public class MainActivity extends Activity{
 
 	private String defaultSize;
 	private boolean light,oneshot;
+	private  final int REQUEST_EXTERNAL_STORAGE = 1 ;
+	private  String[] PERMISSON_STORAGE = {"android.permission.READ_EXTERNAL_STORAGE",
+			"android.permission.WRITE_EXTERNAL_STORAGE",
+			"android.permission.CAMERA"};
+	public  void verifyStoragePermissions(Activity activity){
+		try {
+			int permission = ActivityCompat.checkSelfPermission(activity,"android.permission.WRITE_EXTERNAL_STORAGE");
+			int permissionCAMERA = ActivityCompat.checkSelfPermission(activity,"android.permission.CAMERA");
+			if(permission != PackageManager.PERMISSION_GRANTED
+					|| permissionCAMERA != PackageManager.PERMISSION_GRANTED){/**【判断是否已经授予权限】**/
+				ActivityCompat.requestPermissions(activity,PERMISSON_STORAGE,REQUEST_EXTERNAL_STORAGE);
+			}else{
+				int numberOfCameras = Camera.getNumberOfCameras();
+				Log.e(DEBUG_TAG,"numberOfCameras:"+numberOfCameras);
+				LogUtils.setLogUtils(true);
+				for (int i = 0; i < numberOfCameras; i++) {
+					Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+					Camera.getCameraInfo(i, cameraInfo);
+					Log.e(DEBUG_TAG,"cameraId:"+i);
+
+					//int cameraId = cameraInfo.facing;
+					Camera camera = Camera.open(cameraInfo.facing);
+					List<Camera.Size> supportedSizes = camera.getParameters().getSupportedPreviewSizes();
+
+					for (Camera.Size size : supportedSizes) {
+						int width = size.width;
+						int height = size.height;
+						Log.e(DEBUG_TAG,"camera_width:"+width+",camera_height:"+height);
+						// 在这里可以对分辨率进行其他操作，例如添加到列表中或打印出来
+					}
+
+					camera.release();
+
+//			Camera.CameraInfo info = new Camera.CameraInfo();
+//			//获取相机信息
+//			Camera.getCameraInfo(i, info);
+//			//前置摄像头
+//			if (Camera.CameraInfo.CAMERA_FACING_FRONT == info.facing) {
+//				mFrontCameraId = i;
+//				mFrontCameraInfo = info;
+//			} else if (Camera.CameraInfo.CAMERA_FACING_BACK == info.facing) {
+//				mBackCameraId = i;
+//				mBackCameraInfo = info;
+//			}
+
+				}
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+	}
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.e(DEBUG_TAG,"onCreate()");
+		verifyStoragePermissions(this);
+
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_main);
         setResult(Activity.RESULT_CANCELED);
@@ -101,7 +160,7 @@ public class MainActivity extends Activity{
 				defaultSize = "640x480";
 			}
 			if (checkedId == rb_preview_hd.getId()){
-				defaultSize = "1280x720";
+				defaultSize = "1920x1080";
 			}
 
 		}
@@ -190,7 +249,7 @@ public class MainActivity extends Activity{
 					Log.d(DEBUG_TAG,"decoder_iOpen successful");
 				}
 				//初始化移动检测参数
-				Decoder_jni.getInstance().InitSceneChangeDetection(10,0.3f);
+				Decoder_jni.getInstance().InitSceneChangeDetection(10,0.3f,0.16f);
 
 //				ret = Decoder_jni.getInstance().decoder_iClose(1);
 //				if(ret!=0){
@@ -321,7 +380,7 @@ public class MainActivity extends Activity{
 				if(priview_rg.getCheckedRadioButtonId()==rb_preview_vga.getId()){
 					defaultSize = "640x480";
 				}else{
-					defaultSize = "1280x720";
+					defaultSize = "1920x1080";
 				}
 
 				if(flashSwitch.getCheckedRadioButtonId()==flash_on.getId()){

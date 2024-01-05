@@ -128,7 +128,7 @@ public final class CameraManager {
 	 */
 	public static void closeDriver() {
 		if (mCamera != null) {
-			//FlashlightManager.disableFlashlight();
+//			FlashlightManager.disableFlashlight();
 			mCamera.release();
 			mCamera = null;
 		}

@@ -52,6 +52,8 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 	private long start_1 = 0;
 	private long end_1 = 0;
 	private long lTimes = 0;
+	private long lMaxDecodeTime = 0;
+	private long lMinDecodeTime = 0;
 	private boolean oneshot;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -274,7 +276,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 	
 	public void displayDecodeResult(Boolean decodeSuccess,String text, int jni_cost_time, int codeType, boolean bPlayBeep){
 		if(bPlayBeep==true){
-			FaceUtil.LedSet("led-blue", 1);
+			//FaceUtil.LedSet("led-blue", 1);
 //			beepManager.playBeepSoundAndVibrate();
 			lTimes++;
 			if(lTimes%2==1){
@@ -302,7 +304,22 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 					"codeType="+CodeType.getCodeTypeString(codeType)+"\n"+
 					"decodeTime="+jni_cost_time+" ms\n"+
 					"次数:"+lTimes);
-			FaceUtil.LedSet("led-blue", 0);
+
+			if(lMaxDecodeTime == 0 || lMaxDecodeTime<jni_cost_time){
+				lMaxDecodeTime = jni_cost_time;
+			}
+			if(lMinDecodeTime == 0 || lMinDecodeTime>jni_cost_time){
+				lMinDecodeTime = jni_cost_time;
+			}
+
+			Log.i("testTime",
+					"codeType="+CodeType.getCodeTypeString(codeType)+"\n"+
+					"decodeTime="+jni_cost_time+" ms\n"+
+							"lMaxDecodeTime="+lMaxDecodeTime+" ms\n"+
+							"lMinDecodeTime="+lMinDecodeTime+" ms\n"+
+					"次数:"+lTimes);
+
+		//	FaceUtil.LedSet("led-blue", 0);
 			if (oneshot) {
 				Toast.makeText(CaptureActivity.this, "编码:" + text, Toast.LENGTH_SHORT).show();
 				this.finish();

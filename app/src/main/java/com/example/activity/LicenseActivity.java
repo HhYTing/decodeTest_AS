@@ -127,7 +127,7 @@ public class LicenseActivity extends Activity{
 					finalPath = filePath;
 				}
 				ret = Decoder_jni.getInstance().generate_license(getApplicationContext(), finalPath, 
-													"47.107.124.158", 8001, "ZW001_test", "ux69T3Re");
+													"47.107.124.158", 8001, "tianbo_And1", "g4szhd9j");
 				if(ret!=0){
 					Log.e(DEBUG_TAG,"generate_license failed,ret="+ret);
 					if(ret==-23){

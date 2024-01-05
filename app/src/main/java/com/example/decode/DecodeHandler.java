@@ -49,12 +49,12 @@ public class DecodeHandler extends Handler {
 	public void handleMessage(Message message) {
 		switch (message.what) {
 			case MessageID.MSG_ID_DECODE:
-				//decode((byte[]) message.obj, message.arg1, message.arg2);
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException ex) {
-					ex.printStackTrace();
-				}
+//				decode((byte[]) message.obj, message.arg1, message.arg2);
+//				try {
+//					Thread.sleep(100);
+//				} catch (InterruptedException ex) {
+//					ex.printStackTrace();
+//				}
 				decode_after_SceneChangeDetection((byte[]) message.obj, message.arg1, message.arg2);
 				break;
 			case MessageID.MSG_ID_QUIT:
@@ -153,7 +153,7 @@ public class DecodeHandler extends Handler {
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 				String timeStamp = simpleDateFormat.format(new Date());
 				String name = "decode0628_"+timeStamp;
-//				saveData(yuvdata, name);
+				//saveData(yuvdata, name);
 
 
 				Message message = Message.obtain(handler, MessageID.MSG_ID_DECODE_FAILED,null);
@@ -201,7 +201,7 @@ public class DecodeHandler extends Handler {
 	//存图函数
 	public void saveData(byte[] yuvdata, String type){
 		//Log.i(TAG, Util.getMethodLine()+"saveData");
-		String FileName = "/mnt/sdcard/yuvdata/"  + type + ".yuvdata"; //存储路径修改
+		String FileName = "/sdcard/yuvdata/"  + type + ".yuvdata"; //存储路径修改
 		if(yuvdata != null){
 			File file = new File(FileName);
 			if(file.exists()){

@@ -92,7 +92,6 @@
         android:layout_toRightOf="@+id/bt_scan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_46"
         android:paddingLeft="@dimen/dp_13"
         android:orientation="horizontal">
 
@@ -102,8 +101,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_10"
             android:text="@string/text_preview_vga"
-            android:textSize="@dimen/dp_17"
-            android:checked="true"/>
+            android:textSize="@dimen/dp_17" />
 
         <RadioButton
             android:id="@+id/preview_hd"
@@ -111,7 +109,8 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_10"
             android:text="@string/text_preview_hd"
-            android:textSize="@dimen/dp_17" />
+            android:textSize="@dimen/dp_17"
+            android:checked="true"/>
 
     </RadioGroup>
 <TextView
@@ -123,7 +122,6 @@
         android:layout_toRightOf="@+id/bt_scan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_46"
         android:paddingLeft="@dimen/dp_13"
         android:orientation="horizontal">
 
@@ -134,7 +132,7 @@
             android:padding="@dimen/dp_10"
             android:text="开"
             android:textSize="@dimen/dp_17"
-            android:checked="true"/>
+           />
 
         <RadioButton
             android:id="@+id/flash_off"
@@ -143,7 +141,8 @@
             android:padding="@dimen/dp_10"
             android:layout_marginLeft="@dimen/dp_133"
             android:text="关"
-            android:textSize="@dimen/dp_17" />
+            android:textSize="@dimen/dp_17"
+            android:checked="true"/>
 
     </RadioGroup>
     <TextView
@@ -155,7 +154,6 @@
         android:layout_toRightOf="@+id/bt_scan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_46"
         android:paddingLeft="@dimen/dp_13"
         android:orientation="horizontal">
 
@@ -166,7 +164,7 @@
             android:padding="@dimen/dp_10"
             android:text="单次"
             android:textSize="@dimen/dp_17"
-            android:checked="true"/>
+            />
 
         <RadioButton
             android:id="@+id/oneshot_off"
@@ -175,7 +173,8 @@
             android:padding="@dimen/dp_10"
             android:layout_marginLeft="@dimen/dp_116"
             android:text="连续"
-            android:textSize="@dimen/dp_17" />
+            android:textSize="@dimen/dp_17"
+            android:checked="true"/>
 
     </RadioGroup>
    
