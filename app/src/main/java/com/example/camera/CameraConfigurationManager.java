@@ -153,7 +153,7 @@ final class CameraConfigurationManager {
 			break;
 		}
 
-		if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
+		if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
 			displayOrientation = (cameraInfo.orientation + degrees) % 360;
 			displayOrientation = (360 - displayOrientation) % 360; // compensate
 																	// the

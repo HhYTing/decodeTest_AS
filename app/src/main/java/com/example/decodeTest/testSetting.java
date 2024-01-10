@@ -5,7 +5,7 @@ public class testSetting {
 	public final static int CAMERA_ID_FRONT = 1;
 	private static boolean bContinuousScan = true;
 	private static boolean bNeedSaveBitmap = false;
-	private static int iCameraID = CAMERA_ID_FRONT;
+	private static int iCameraID = 2;
 	
 	public static void setContinuousScan(boolean value){
 		bContinuousScan = value;
