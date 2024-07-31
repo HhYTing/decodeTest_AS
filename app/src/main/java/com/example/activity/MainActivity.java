@@ -3,7 +3,10 @@ package com.example.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.ImageFormat;
 import android.hardware.Camera;
+import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.params.StreamConfigurationMap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -11,6 +14,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.util.Size;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -19,6 +23,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.decodeTest.R;
+import com.example.decodeTest.testSetting;
 import com.example.util.LogUtils;
 import com.hd.decoder.CodeType;
 import com.hd.decoder.Decoder_jni;
@@ -50,6 +55,10 @@ public class MainActivity extends Activity{
 	private  String[] PERMISSON_STORAGE = {"android.permission.READ_EXTERNAL_STORAGE",
 			"android.permission.WRITE_EXTERNAL_STORAGE",
 			"android.permission.CAMERA"};
+	private List<Camera.Size> supportedSizes;
+	private String previewMinSizeStr;
+	private String previewMaxSizeStr;
+
 	public  void verifyStoragePermissions(Activity activity){
 		try {
 			int permission = ActivityCompat.checkSelfPermission(activity,"android.permission.WRITE_EXTERNAL_STORAGE");
@@ -67,8 +76,8 @@ public class MainActivity extends Activity{
 					Log.e(DEBUG_TAG,"cameraId:"+i);
 
 					//int cameraId = cameraInfo.facing;
-					Camera camera = Camera.open(cameraInfo.facing);
-					List<Camera.Size> supportedSizes = camera.getParameters().getSupportedPreviewSizes();
+					Camera camera = Camera.open(testSetting.getCameraID());
+					supportedSizes = camera.getParameters().getSupportedPreviewSizes();
 
 					for (Camera.Size size : supportedSizes) {
 						int width = size.width;
@@ -76,6 +85,10 @@ public class MainActivity extends Activity{
 						Log.e(DEBUG_TAG,"camera_width:"+width+",camera_height:"+height);
 						// 在这里可以对分辨率进行其他操作，例如添加到列表中或打印出来
 					}
+
+					previewMinSizeStr = supportedSizes.get(supportedSizes.size()-1).width + "x" + supportedSizes.get(supportedSizes.size()-1).height;
+					previewMaxSizeStr = supportedSizes.get(0).width + "x" + supportedSizes.get(0).height;
+					Log.d(DEBUG_TAG,"previewMinSize:" + previewMinSizeStr + ",previewMaxSize:"+previewMaxSizeStr);
 
 					camera.release();
 
@@ -115,6 +128,8 @@ public class MainActivity extends Activity{
 
 		rb_preview_vga = (RadioButton)findViewById(R.id.preview_vga);
 		rb_preview_hd = (RadioButton)findViewById(R.id.preview_hd);
+		rb_preview_vga.setText(previewMinSizeStr);
+		rb_preview_hd.setText(previewMaxSizeStr);
 		priview_rg = (RadioGroup)findViewById(R.id.mode_rg_size);
 
 		flash_off = (RadioButton)findViewById(R.id.flash_off);
@@ -157,10 +172,10 @@ public class MainActivity extends Activity{
 			}
 
 			if (checkedId == rb_preview_vga.getId()){
-				defaultSize = "640x480";
+				defaultSize = previewMinSizeStr;
 			}
 			if (checkedId == rb_preview_hd.getId()){
-				defaultSize = "1920x1080";
+				defaultSize = previewMaxSizeStr;;
 			}
 
 		}
@@ -378,9 +393,9 @@ public class MainActivity extends Activity{
 				/*2. start camere preview to decode*/
 				Intent intent = new Intent(MainActivity.this, CaptureActivity.class);
 				if(priview_rg.getCheckedRadioButtonId()==rb_preview_vga.getId()){
-					defaultSize = "640x480";
+					defaultSize = previewMinSizeStr;
 				}else{
-					defaultSize = "1920x1080";
+					defaultSize = previewMaxSizeStr;
 				}
 
 				if(flashSwitch.getCheckedRadioButtonId()==flash_on.getId()){

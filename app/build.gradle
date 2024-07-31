@@ -11,7 +11,7 @@ android {
         versionCode 3
         versionName new Date().format("yyyyMMddHHmmss")
         ndk {
-            abiFilters "armeabi"         }
+            abiFilters "armeabi-v7a"         }
     }
 
     buildTypes {
