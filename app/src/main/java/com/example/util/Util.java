@@ -15,11 +15,15 @@ Additional permission under GNU GPL version 3 section 7 */
 
 package com.example.util;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -28,6 +32,8 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Environment;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.util.LogUtils;
 
@@ -439,5 +445,50 @@ public final class Util {
 		}
 		average = sum/dataArray.length;
 		return average;
+	}
+
+//	保存字符串到sdcard的txt文件
+	public static void writeData(String data) {
+		if (Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED)) { // 如果sdcard存在
+			File file = new File(Environment.getExternalStorageDirectory()
+					.toString()
+					+ File.separator
+					+ "scancode.txt"); // 定义File类对象
+			if (!file.getParentFile().exists()) { // 父文件夹不存在
+				file.getParentFile().mkdirs(); // 创建文件夹
+			}
+			PrintStream out = null; // 打印流对象用于输出
+			try {
+				out = new PrintStream(new FileOutputStream(file, false)); // 追加文件
+				out.println(data);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (out != null) {
+					out.close(); // 关闭打印流
+				}
+			}
+		} else { // SDCard不存在，提示用户
+			Log.e("write to sdcard","保存失败，SD卡不存在！");
+		}
+	}
+
+	//读取sdcard的txt文件
+	public static String readTxt(String path){
+		String str = "";
+		try {
+			File urlFile = new File(path);
+			InputStreamReader isr = new InputStreamReader(new FileInputStream(urlFile), "UTF-8");
+			BufferedReader br = new BufferedReader(isr);
+
+			String mimeTypeLine = null ;
+			while ((mimeTypeLine = br.readLine()) != null) {
+				str = str+mimeTypeLine;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return  str;
 	}
 }

@@ -25,9 +25,11 @@ import android.widget.RadioGroup;
 import com.example.decodeTest.R;
 import com.example.decodeTest.testSetting;
 import com.example.util.LogUtils;
+import com.example.util.Util;
 import com.hd.decoder.CodeType;
 import com.hd.decoder.Decoder_jni;
 
+import java.io.File;
 import java.util.List;
 
 public class MainActivity extends Activity{
@@ -48,6 +50,12 @@ public class MainActivity extends Activity{
     private RadioGroup oneshotSwitch;
     private RadioButton oneshot_on;
     private RadioButton oneshot_off;
+
+	//扫码内容输入框
+	private EditText editRecvData1;
+
+	//输入框内容
+	private String editTextDecode;
 
 	private String defaultSize;
 	private boolean light,oneshot;
@@ -145,12 +153,28 @@ public class MainActivity extends Activity{
 		flashSwitch.setOnCheckedChangeListener(ls);
 
         m_editRecvData=(EditText)findViewById(R.id.activity_main_editRecvData);
+		editRecvData1 = (EditText)findViewById(R.id.activity_main_editRecvData1);
+
         mMainMessageHandler = new MessageHandler(Looper.myLooper());
         
         Log.d(DEBUG_TAG,"apk version="+VER);
         showLogMessage("version="+VER);
         showLogMessage("备注1：请打开WIFI  (a.激活license需开wifi；b.调用decoder_iOpen接口需开wifi，该接口返回后可关闭wifi).");
         showLogMessage("备注2：存放license的目录必须保证权限是应用可读可写, 默认存放在SD卡根目录的hdcrt.lic文件里, 用户可以改变存放路径.");
+
+
+		File file = new File(Environment.getExternalStorageDirectory()
+				.toString()
+				+ File.separator
+				+ "scancode.txt");
+		if (file.exists()){
+			//读取txt文件内容
+			Log.d("txtPath","txt Path:" + file.getPath());
+			String resultStr = Util.readTxt(file.getPath());
+			Log.d("resultStr","resultStr:" + resultStr);
+//			如果文件存在，设置txt内容到编辑框内
+			editRecvData1.setText(resultStr);
+		}
     }
 
 	private RadioGroup.OnCheckedChangeListener ls = new RadioGroup.OnCheckedChangeListener() {
@@ -410,9 +434,15 @@ public class MainActivity extends Activity{
                     oneshot=false;
                 }
 
+				//保存输入框内容到本地sdcard的txt文件
+				Util.writeData(editRecvData1.getText().toString());
+				editTextDecode = editRecvData1.getText().toString();
+				Log.d("editTextDecode","editTextDecode:" + editTextDecode);
+
 				intent.putExtra("scan_mode",defaultSize);
 				intent.putExtra("flash_mode",light);
                 intent.putExtra("oneshot_mode",oneshot);
+				intent.putExtra("editText_scancode",editTextDecode);
 				MainActivity.this.startActivityForResult(intent, CaptureActivity.REQUEST_CODE_SCAN_DECODE);
 				break;
 			}

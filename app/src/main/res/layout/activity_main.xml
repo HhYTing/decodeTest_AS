@@ -179,14 +179,29 @@
     </RadioGroup>
    
    <EditText android:inputType="textMultiLine" 
-        android:layout_width="fill_parent" 
+        android:layout_width="fill_parent"
         android:id="@+id/activity_main_editRecvData" 
-        android:layout_height="fill_parent" 
+        android:layout_height="wrap_content"
         android:gravity="top" 
         android:enabled="true" 
         android:focusable="false"
         android:textAppearance="?android:attr/textAppearanceSmall">
         
+    </EditText>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="需比对的扫码内容："/>
+
+    <EditText android:inputType="textMultiLine"
+        android:layout_width="fill_parent"
+        android:id="@+id/activity_main_editRecvData1"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:enabled="true"
+        android:focusable="true">
     </EditText>
  
 </LinearLayout>

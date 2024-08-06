@@ -55,6 +55,13 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 	private long lMaxDecodeTime = 0;
 	private long lMinDecodeTime = 0;
 	private boolean oneshot;
+
+	//输入框的扫描内容
+	private String scanCode;
+
+	//误码次数
+	private long errorTime = 0;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Log.i(TAG, Util.getMethodLine()+"begin");
@@ -86,6 +93,8 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 		}
 		light = bundle.getBoolean("flash_mode",true);
 		oneshot = bundle.getBoolean("oneshot_mode",false);
+		scanCode = bundle.getString("editText_scancode");
+		Log.d("CaptureActivity","scanCode:" + scanCode);
 
 		CameraManager.init(getApplication(),this,mode,light);
 		doInit();
@@ -299,11 +308,15 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 		resultView.setVisibility(View.VISIBLE);	  
 
 		if(bPlayBeep==true) {
+			if (!scanCode.equals(text)) {
+				errorTime++;
+			}
 			TextView_resultText.setText("text="+text);
 			TextView_resultText.setText("result="+text+"\n"+
 					"codeType="+CodeType.getCodeTypeString(codeType)+"\n"+
 					"decodeTime="+jni_cost_time+" ms\n"+
-					"次数:"+lTimes);
+					"总次数:"+lTimes + "\n" +
+					"误码数：" + errorTime + "\n");
 
 			if(lMaxDecodeTime == 0 || lMaxDecodeTime<jni_cost_time){
 				lMaxDecodeTime = jni_cost_time;
@@ -313,11 +326,13 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 			}
 
 			Log.i("testTime",
+					"result="+text+"\n"+
 					"codeType="+CodeType.getCodeTypeString(codeType)+"\n"+
 					"decodeTime="+jni_cost_time+" ms\n"+
 							"lMaxDecodeTime="+lMaxDecodeTime+" ms\n"+
 							"lMinDecodeTime="+lMinDecodeTime+" ms\n"+
-					"次数:"+lTimes);
+					"总次数:"+lTimes + "\n" +
+							"误码数：" + errorTime);
 
 		//	FaceUtil.LedSet("led-blue", 0);
 			if (oneshot) {
