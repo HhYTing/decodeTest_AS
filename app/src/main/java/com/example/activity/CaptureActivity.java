@@ -58,6 +58,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 
 	//输入框的扫描内容
 	private String scanCode;
+	private boolean isChecked;
 
 	//误码次数
 	private long errorTime = 0;
@@ -94,7 +95,10 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 		light = bundle.getBoolean("flash_mode",true);
 		oneshot = bundle.getBoolean("oneshot_mode",false);
 		scanCode = bundle.getString("editText_scancode");
+		isChecked = bundle.getBoolean("isCheck");
+
 		Log.d("CaptureActivity","scanCode:" + scanCode);
+		Log.d("CaptureActivity","isChecked:" + isChecked);
 
 		CameraManager.init(getApplication(),this,mode,light);
 		doInit();
@@ -308,15 +312,24 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 		resultView.setVisibility(View.VISIBLE);	  
 
 		if(bPlayBeep==true) {
-			if (!scanCode.equals(text)) {
-				errorTime++;
+//			需要比对误码
+			if (isChecked) {
+				if (!scanCode.equals(text)) {
+					errorTime++;
+				}
+				TextView_resultText.setText("text="+text);
+				TextView_resultText.setText("result="+text+"\n"+
+						"codeType="+CodeType.getCodeTypeString(codeType)+"\n"+
+						"decodeTime="+jni_cost_time+" ms\n"+
+						"总次数:"+lTimes + "\n" +
+						"误码数：" + errorTime + "\n");
+			} else {
+				TextView_resultText.setText("text="+text);
+				TextView_resultText.setText("result="+text+"\n"+
+						"codeType="+CodeType.getCodeTypeString(codeType)+"\n"+
+						"decodeTime="+jni_cost_time+" ms\n"+
+						"总次数:"+lTimes );
 			}
-			TextView_resultText.setText("text="+text);
-			TextView_resultText.setText("result="+text+"\n"+
-					"codeType="+CodeType.getCodeTypeString(codeType)+"\n"+
-					"decodeTime="+jni_cost_time+" ms\n"+
-					"总次数:"+lTimes + "\n" +
-					"误码数：" + errorTime + "\n");
 
 			if(lMaxDecodeTime == 0 || lMaxDecodeTime<jni_cost_time){
 				lMaxDecodeTime = jni_cost_time;
@@ -325,14 +338,24 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 				lMinDecodeTime = jni_cost_time;
 			}
 
-			Log.i("testTime",
-					"result="+text+"\n"+
-					"codeType="+CodeType.getCodeTypeString(codeType)+"\n"+
-					"decodeTime="+jni_cost_time+" ms\n"+
-							"lMaxDecodeTime="+lMaxDecodeTime+" ms\n"+
-							"lMinDecodeTime="+lMinDecodeTime+" ms\n"+
-					"总次数:"+lTimes + "\n" +
-							"误码数：" + errorTime);
+			if (isChecked) {
+				Log.i("testTime",
+						"result="+text+"\n"+
+								"codeType="+CodeType.getCodeTypeString(codeType)+"\n"+
+								"decodeTime="+jni_cost_time+" ms\n"+
+								"lMaxDecodeTime="+lMaxDecodeTime+" ms\n"+
+								"lMinDecodeTime="+lMinDecodeTime+" ms\n"+
+								"总次数:"+lTimes + "\n" +
+								"误码数：" + errorTime);
+			} else {
+				Log.i("testTime",
+						"result="+text+"\n"+
+								"codeType="+CodeType.getCodeTypeString(codeType)+"\n"+
+								"decodeTime="+jni_cost_time+" ms\n"+
+								"lMaxDecodeTime="+lMaxDecodeTime+" ms\n"+
+								"lMinDecodeTime="+lMinDecodeTime+" ms\n"+
+								"总次数:"+lTimes);
+			}
 
 		//	FaceUtil.LedSet("led-blue", 0);
 			if (oneshot) {

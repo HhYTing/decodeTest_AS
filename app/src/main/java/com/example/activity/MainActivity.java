@@ -18,6 +18,8 @@ import android.util.Size;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -51,11 +53,16 @@ public class MainActivity extends Activity{
     private RadioButton oneshot_on;
     private RadioButton oneshot_off;
 
+	private CheckBox checkbox1;
+
 	//扫码内容输入框
 	private EditText editRecvData1;
 
 	//输入框内容
 	private String editTextDecode;
+
+	//是否需要比对
+	private boolean isCheck;
 
 	private String defaultSize;
 	private boolean light,oneshot;
@@ -154,6 +161,7 @@ public class MainActivity extends Activity{
 
         m_editRecvData=(EditText)findViewById(R.id.activity_main_editRecvData);
 		editRecvData1 = (EditText)findViewById(R.id.activity_main_editRecvData1);
+		checkbox1 = (CheckBox)findViewById(R.id.checkbox1);
 
         mMainMessageHandler = new MessageHandler(Looper.myLooper());
         
@@ -175,6 +183,19 @@ public class MainActivity extends Activity{
 //			如果文件存在，设置txt内容到编辑框内
 			editRecvData1.setText(resultStr);
 		}
+
+		checkbox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+				if (isChecked) {
+					Log.d("checkbox","ischecked:" + isChecked);
+					isCheck = isChecked;
+				} else {
+					Log.d("checkbox","isChecked:" + isChecked);
+					isCheck = isChecked;
+				}
+			}
+		});
     }
 
 	private RadioGroup.OnCheckedChangeListener ls = new RadioGroup.OnCheckedChangeListener() {
@@ -443,6 +464,7 @@ public class MainActivity extends Activity{
 				intent.putExtra("flash_mode",light);
                 intent.putExtra("oneshot_mode",oneshot);
 				intent.putExtra("editText_scancode",editTextDecode);
+				intent.putExtra("isCheck",isCheck);
 				MainActivity.this.startActivityForResult(intent, CaptureActivity.REQUEST_CODE_SCAN_DECODE);
 				break;
 			}
