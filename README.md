@@ -1,2 +1,2 @@
 # decodeTest_AS
-酷达微多码识别算法Android应用
+酷达微多码识别算法Android应用，需要将设备的授权码放到指定路径
